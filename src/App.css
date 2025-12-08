@@ -1,0 +1,44 @@
+#root {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background: #535bf2;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.capture-area {
+  margin-top: 2rem;
+}
+
+video {
+  max-width: 100%;
+  border-radius: 12px;
+}
