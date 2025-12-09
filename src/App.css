@@ -34,11 +34,9 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.capture-area {
-  margin-top: 2rem;
-}
-
-video {
+video,
+canvas {
   max-width: 100%;
   border-radius: 12px;
+  border: white solid 2px;
 }
