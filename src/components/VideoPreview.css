@@ -15,7 +15,7 @@
   background: #333;
   border-radius: 4px;
   margin: 1rem auto;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .progress-bar {
