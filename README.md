@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# Video Capture App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React application that captures photos using the WebRTC `getUserMedia` API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📷 Access device camera (front-facing)
+- ⏱️ 5-second countdown with visual progress bar
+- 📸 Automatic photo capture
+- 🎨 Clean, modern UI with responsive design
+- ⚠️ Error handling with user-friendly messages
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** with TypeScript
+- **Vite** - Fast build tool and dev server
+- **WebRTC API** - Native browser media access
+- **CSS3** - Custom styling with gradients and animations
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 22+
+- pnpm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm run build
+pnpm run preview
 ```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── Instructions.tsx      # Start button and instructions
+│   ├── VideoPreview.tsx       # Video stream display with progress bar
+│   └── PhotoCapture.tsx       # Canvas for captured photo
+├── hooks/
+│   └── useCamera.ts           # Custom hook for camera logic
+├── constants.ts               # App constants (dimensions, timing)
+├── App.tsx                    # Main app component
+└── App.css                    # Global styles
+```
+
+## How It Works
+
+1. User clicks "Start" button
+2. Browser requests camera permission
+3. Video stream displays with a 5-second progress bar
+4. Photo is automatically captured to canvas
+5. Camera stops and photo is displayed
