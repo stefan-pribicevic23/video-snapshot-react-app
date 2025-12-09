@@ -1,6 +1,7 @@
 # Video Capture App
 
 A simple React application that captures photos using the WebRTC `getUserMedia` API.
+Demo included - `demo.gif`.
 
 ## Features
 
