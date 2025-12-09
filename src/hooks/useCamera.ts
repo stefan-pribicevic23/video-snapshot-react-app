@@ -14,11 +14,18 @@ export function useCamera() {
         video: { facingMode: 'user' },
         audio: false
       });
+      
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-      setIsCapturing(true);
-      setProgress(0);
+
+      setError(null);
+      
+      // Wait for the camera to start
+      setTimeout(() => {
+        setIsCapturing(true);
+        setProgress(0);
+      }, 1000);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unable to start camera');
     }
