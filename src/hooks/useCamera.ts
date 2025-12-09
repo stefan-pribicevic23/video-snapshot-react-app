@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { CAPTURE_DURATION, PROGRESS_INTERVAL } from '../constants';
 
 export function useCamera() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const startCamera = async () => {
     try {
@@ -16,13 +18,20 @@ export function useCamera() {
         videoRef.current.srcObject = stream;
       }
       setIsCapturing(true);
-      setTimeout(takePhoto, 5000);
+      setProgress(0);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to start camera');
     }
   };
 
-  const takePhoto = () => {
+  const stopCamera = useCallback(() => {
+    const stream = videoRef.current?.srcObject as MediaStream;
+    stream?.getTracks().forEach(track => track.stop());
+    setIsCapturing(false);
+    setProgress(0);
+  }, []);
+
+  const takePhoto = useCallback(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
@@ -32,13 +41,26 @@ export function useCamera() {
       ctx.drawImage(video, 0, 0);
       stopCamera();
     }
-  };
+  }, [stopCamera]);
 
-  const stopCamera = () => {
-    const stream = videoRef.current?.srcObject as MediaStream;
-    stream?.getTracks().forEach(track => track.stop());
-    setIsCapturing(false);
-  };
+  useEffect(() => {
+    if (!isCapturing) return;
 
-  return { videoRef, canvasRef, error, isCapturing, startCamera, stopCamera };
+    const startTime = Date.now();
+    
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min((elapsed / CAPTURE_DURATION) * 100, 100);
+      setProgress(newProgress);
+
+      if (elapsed >= CAPTURE_DURATION) {
+        clearInterval(interval);
+        takePhoto();
+      }
+    }, PROGRESS_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [isCapturing, takePhoto]);
+
+  return { videoRef, canvasRef, error, isCapturing, progress, startCamera, stopCamera };
 }
