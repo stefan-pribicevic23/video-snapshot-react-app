@@ -4,6 +4,7 @@ export function useCamera() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const startCamera = async () => {
     try {
@@ -14,6 +15,7 @@ export function useCamera() {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
+      setIsCapturing(true);
       setTimeout(takePhoto, 5000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to start camera');
@@ -35,7 +37,8 @@ export function useCamera() {
   const stopCamera = () => {
     const stream = videoRef.current?.srcObject as MediaStream;
     stream?.getTracks().forEach(track => track.stop());
+    setIsCapturing(false);
   };
 
-  return { videoRef, canvasRef, error, startCamera, stopCamera };
+  return { videoRef, canvasRef, error, isCapturing, startCamera, stopCamera };
 }

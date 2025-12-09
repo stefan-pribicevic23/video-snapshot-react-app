@@ -5,11 +5,11 @@ import PhotoCapture from './components/PhotoCapture';
 import './App.css';
 
 function App() {
-  const { videoRef, canvasRef, error, startCamera } = useCamera();
+  const { videoRef, canvasRef, error, isCapturing, startCamera } = useCamera();
 
   return (
     <>
-      <Instructions onStartClick={startCamera} />
+      <Instructions onStartClick={startCamera} isCapturing={isCapturing} />
       <VideoPreview ref={videoRef} error={error} />
       <PhotoCapture ref={canvasRef} />
     </>

@@ -1,8 +1,9 @@
 type InstructionsProps = {
   onStartClick: () => void;
+  isCapturing: boolean;
 };
 
-const Instructions: React.FC<InstructionsProps> = ({ onStartClick }) => {
+const Instructions: React.FC<InstructionsProps> = ({ onStartClick, isCapturing }) => {
   return (
     <section>
       <h1>Video Capture</h1>
@@ -10,8 +11,8 @@ const Instructions: React.FC<InstructionsProps> = ({ onStartClick }) => {
         Click the button to allow camera access.
         A photo will be taken automatically after a few seconds.
       </p>
-      <button onClick={onStartClick}>
-        Start
+      <button onClick={onStartClick} disabled={isCapturing}>
+        {isCapturing ? 'Capturing...' : 'Start'}
       </button>
     </section>
   );
