@@ -19,8 +19,8 @@ export function useCamera() {
       }
       setIsCapturing(true);
       setProgress(0);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to start camera');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Unable to start camera');
     }
   };
 
